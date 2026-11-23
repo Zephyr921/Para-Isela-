@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para Isela ♡</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#ffe9f0;--bg2:#ffd3e2;--card:#fffafc;--pink:#f48fb1;--deep:#d6578a;--text:#5a2a41;--soft:#a5708a;--line:#f6c9da}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:'Quicksand',system-ui,sans-serif;color:var(--text);background:linear-gradient(160deg,var(--bg1),var(--bg2));display:flex;justify-content:center;padding:24px 14px;overflow-x:hidden}
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.hearts span{position:absolute;bottom:-40px;color:var(--pink);opacity:.35;animation:float linear infinite}
+@keyframes float{to{transform:translateY(-110vh) rotate(25deg)}}
+.card{position:relative;z-index:1;width:100%;max-width:520px;background:var(--card);border-radius:28px;padding:28px 22px;box-shadow:0 14px 40px rgba(214,87,138,.2);align-self:flex-start}
+h1{font-family:'Pacifico',cursive;font-weight:400;color:var(--deep);font-size:1.9rem;margin:0 0 6px;text-align:center}
+.sub{text-align:center;color:var(--soft);margin:0 0 20px;font-size:.98rem}
+.bar{height:8px;background:var(--line);border-radius:9px;margin-bottom:22px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--deep));transition:width .4s}
+.step{display:none;animation:in .4s}.step.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.opt,.btn{font:inherit;font-weight:600;border:2px solid var(--line);background:#fff;color:var(--text);padding:13px 10px;border-radius:16px;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--pink);transform:translateY(-2px)}
+.opt.sel{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 6px 16px rgba(244,143,177,.45)}
+.btn{background:var(--deep);border-color:var(--deep);color:#fff;width:100%;padding:14px;font-size:1.02rem;margin-top:8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--deep)}
+.yes{font-size:1.15rem}
+#no{position:relative}
+.extra{display:none;margin-top:6px;padding:14px;border-radius:18px;background:#fff1f6;border:2px dashed var(--line)}
+.extra.on{display:block;animation:in .4s}
+.extra h3{margin:0 0 2px;font-size:1rem;color:var(--deep)}
+.extra p{margin:0 0 6px;font-size:.88rem;color:var(--soft)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin:12px 0 6px;text-transform:capitalize}
+.cal-head button{border:0;background:var(--line);color:var(--deep);width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+.cal-head button:disabled{opacity:.3}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal .dn{font-size:.75rem;color:var(--soft);font-weight:700}
+.cal button{aspect-ratio:1;border:0;border-radius:12px;background:#fff;font:inherit;color:var(--text);cursor:pointer}
+.cal button:hover:not(:disabled){background:var(--line)}
+.cal button.sel{background:var(--deep);color:#fff}
+.cal button:disabled{opacity:.25;cursor:default}
+select{width:100%;font:inherit;padding:13px;border-radius:14px;border:2px solid var(--line);background:#fff;color:var(--text);margin-top:6px}
+label{font-weight:700;font-size:.92rem;display:block;margin-top:14px}
+.sum{background:#fff1f6;border-radius:18px;padding:14px 16px;line-height:1.7;margin:12px 0}
+.msg{text-align:center;font-size:.9rem;color:var(--soft);min-height:1.2em;margin-top:6px}
+a.btn{display:block;text-align:center;text-decoration:none}
+.big{font-size:3rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<main class="card">
+  <h1>Para Isela ♡</h1>
+  <p class="sub" id="sub">Tengo una pregunta importante...</p>
+  <div class="bar"><i id="bar"></i></div>
+
+  <!-- 1 -->
+  <section class="step on" data-s="0">
+    <h2>¿Saldrías conmigo?</h2>
+    <p class="sub">Piénsalo bien... aunque ya sé tu respuesta 😏</p>
+    <div class="grid" id="yn" style="min-height:60px">
+      <button class="opt yes" id="yes">Sí ♡</button>
+      <button class="opt" id="no">No :c</button>
+    </div>
+    <div class="msg" id="nomsg"></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step" data-s="1">
+    <h2>¿Qué tipo de cita?</h2>
+    <p class="sub">Elige tu aventura, yo me encargo del resto.</p>
+    <div class="grid" id="tipo">
+      <button class="opt" data-v="Coffee date ☕">Coffee date ☕</button>
+      <button class="opt" data-v="Cena romántica 🕯️">Cena romántica 🕯️</button>
+      <button class="opt" data-v="Movie date 🎬">Movie date 🎬</button>
+      <button class="opt" data-v="Museo / galería de arte 🖼️">Museo / galería de arte 🖼️</button>
+      <button class="opt" data-v="Aventura en la naturaleza 🌿">Aventura en la naturaleza 🌿</button>
+      <button class="opt" data-v="Viaje en carretera 🚗">Viaje en carretera 🚗</button>
+    </div>
+    <div class="extra" data-for="Cena romántica 🕯️">
+      <h3>Código de vestimenta</h3><p>Para que ambos nos veamos increíbles ✨</p>
+      <div class="grid"><button class="opt" data-v="Casual">Casual</button><button class="opt" data-v="Casual elegante">Casual elegante</button><button class="opt" data-v="Elegante">Elegante</button><button class="opt" data-v="Sorpréndeme">Sorpréndeme</button></div>
+    </div>
+    <div class="extra" data-for="Museo / galería de arte 🖼️">
+      <h3>¿Qué tipo de museo?</h3><p>Ojo: los dinosaurios cuentan como cultura.</p>
+      <div class="grid"><button class="opt" data-v="Arte 🎨">Arte 🎨</button><button class="opt" data-v="Dinosaurios 🦖">Dinosaurios 🦖</button><button class="opt" data-v="Acuario 🐠">Acuario 🐠</button><button class="opt" data-v="Ciencia 🔬">Ciencia 🔬</button></div>
+    </div>
+    <div class="extra" data-for="Viaje en carretera 🚗">
+      <h3>¿Qué destino?</h3><p>Yo pongo el playlist, tú eliges el rumbo.</p>
+      <div class="grid"><button class="opt" data-v="Pueblito mágico ✨">Pueblito mágico ✨</button><button class="opt" data-v="Ciudad grande 🌆">Ciudad grande 🌆</button><button class="opt" data-v="Reserva natural 🌲">Reserva natural 🌲</button></div>
+    </div>
+    <button class="btn" data-next disabled>Siguiente</button>
+  </section>
+
+  <!-- 3 -->
+  <section class="step" data-s="2">
+    <h2>¿A dónde te gustaría ir?</h2>
+    <p class="sub">Sin presión... bueno, un poquito.</p>
+    <div class="grid" id="donde">
+      <button class="opt" data-v="Tu lugar favorito">Tu lugar favorito</button>
+      <button class="opt" data-v="Mi lugar favorito">Mi lugar favorito</button>
+      <button class="opt" data-v="¡Sorpréndeme!">¡Sorpréndeme!</button>
+      <button class="opt" data-v="Decidamos juntos">Decidamos juntos</button>
+    </div>
+    <button class="btn" data-next disabled>Siguiente</button>
+  </section>
+
+  <!-- 4 -->
+  <section class="step" data-s="3">
+    <h2>¿Cuándo lo hacemos realidad?</h2>
+    <p class="sub">Sé que andas ocupada, pero prometo que valdrá la pena.</p>
+    <div class="cal-head"><button id="prev">‹</button><span id="mname"></span><button id="next">›</button></div>
+    <div class="cal" id="cal"></div>
+    <label for="hora">¿A qué hora paso por ti?</label>
+    <select id="hora"><option value="">Elige una hora…</option></select>
+    <button class="btn" data-next disabled id="n4">Siguiente</button>
+  </section>
+
+  <!-- resumen -->
+  <section class="step" data-s="4">
+    <h2>¡Casi listo! 💌</h2>
+    <p class="sub">Revisa que todo esté como lo quieres.</p>
+    <div class="sum" id="sum"></div>
+    <button class="btn" id="send">Confirmar detalles de nuestra cita</button>
+    <button class="btn ghost" id="back">Cambiar algo</button>
+    <div class="msg" id="smsg"></div>
+  </section>
+
+  <!-- gracias -->
+  <section class="step" data-s="5">
+    <div class="big">🥰</div>
+    <h2 style="text-align:center">¡Es una cita, Isela!</h2>
+    <p class="sub">Ya recibí tus respuestas. Ahora no te me escapas 😌<br>Guárdala en tu calendario para que no se te olvide:</p>
+    <a class="btn" id="gcal" target="_blank" rel="noopener">Agregar a Google Calendar 📅</a>
+  </section>
+</main>
+
+<script>
+const EMAIL="carlox21137@gmail.com";
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const S={tipo:"",extra:"",donde:"",fecha:"",hora:""};
+let step=0;
+
+// floating hearts
+for(let i=0;i<16;i++){const h=document.createElement("span");h.textContent="♡";h.style.left=Math.random()*100+"%";h.style.fontSize=12+Math.random()*22+"px";h.style.animationDuration=9+Math.random()*10+"s";h.style.animationDelay=-Math.random()*15+"s";$("#hearts").appendChild(h)}
+
+function go(n){step=n;$$(".step").forEach(e=>e.classList.toggle("on",+e.dataset.s===n));$("#bar").style.width=Math.min(n,4)/4*100+"%";window.scrollTo({top:0,behavior:"smooth"})}
+
+// Q1: the "No" button runs away
+const no=$("#no"),msgs=["Uy, casi 😜","Ese botón está roto","Jeje, no se puede","Inténtalo otra vez...","Mejor di que sí ♡","Imposible, mi amor"];
+let mi=0;
+function dodge(e){e&&e.preventDefault();no.style.position="fixed";const w=innerWidth-no.offsetWidth-16,h=innerHeight-no.offsetHeight-16;no.style.left=8+Math.random()*w+"px";no.style.top=8+Math.random()*h+"px";no.style.zIndex=5;$("#nomsg").textContent=msgs[mi++%msgs.length]}
+["pointerenter","pointerdown","touchstart","click","focus"].forEach(ev=>no.addEventListener(ev,dodge,{passive:false}));
+$("#yes").onclick=()=>{no.style.display="none";$("#sub").textContent="¡Sabía que dirías que sí!";go(1)};
+
+// generic single-select groups
+function pick(container,key,after){container.addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b||!container.contains(b))return;$$("#"+container.id+" > .opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");S[key]=b.dataset.v;after&&after()})}
+pick($("#donde"),"donde",()=>$("#donde~[data-next]").disabled=false);
+
+// Q2 with follow-ups
+function check2(){const ex=$(`.extra[data-for="${S.tipo}"]`);$("[data-s='1'] [data-next]").disabled=!S.tipo||(ex&&!S.extra)}
+$("#tipo").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b)return;$$("#tipo .opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");S.tipo=b.dataset.v;S.extra="";
+ $$(".extra").forEach(x=>{x.classList.toggle("on",x.dataset.for===S.tipo);x.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"))});check2()});
+$$(".extra").forEach(ex=>ex.addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b)return;ex.querySelectorAll(".opt").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");S.extra=b.dataset.v;check2()}));
+
+$$("[data-next]").forEach(b=>b.onclick=()=>{if(step===3)summary();go(step+1)});
+
+// Q4: calendar (Nov & Dec 2026) + time
+const today=new Date();today.setHours(0,0,0,0);
+let month=10;const YEAR=2026,mnames=["noviembre","diciembre"];
+function pad(n){return String(n).padStart(2,"0")}
+function drawCal(){
+ $("#mname").textContent=mnames[month-10]+" "+YEAR;$("#prev").disabled=month===10;$("#next").disabled=month===11;
+ const c=$("#cal");c.innerHTML="";["L","M","M","J","V","S","D"].forEach(d=>c.insertAdjacentHTML("beforeend",`<div class="dn">${d}</div>`));
+ const first=(new Date(YEAR,month,1).getDay()+6)%7,days=new Date(YEAR,month+1,0).getDate();
+ for(let i=0;i<first;i++)c.appendChild(document.createElement("div"));
+ for(let d=1;d<=days;d++){const b=document.createElement("button");const iso=`${YEAR}-${pad(month+1)}-${pad(d)}`;b.textContent=d;b.disabled=new Date(YEAR,month,d)<today;if(S.fecha===iso)b.classList.add("sel");b.onclick=()=>{S.fecha=iso;drawCal();chk4()};c.appendChild(b)}
+}
+$("#prev").onclick=()=>{month=10;drawCal()};$("#next").onclick=()=>{month=11;drawCal()};
+for(let h=9;h<=21;h++)for(const m of ["00","30"]){if(h===21&&m==="30")continue;const t=`${pad(h)}:${m}`;const lbl=`${(h%12)||12}:${m} ${h<12?"a. m.":"p. m."}`;$("#hora").insertAdjacentHTML("beforeend",`<option value="${t}">${lbl}</option>`)}
+$("#hora").onchange=e=>{S.hora=e.target.value;chk4()};
+function chk4(){$("#n4").disabled=!(S.fecha&&S.hora)}
+drawCal();
+
+// summary / send
+const fmtDate=()=>{const[y,m,d]=S.fecha.split("-");return new Date(y,m-1,d).toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long",year:"numeric"})};
+const hLabel=()=>$("#hora").selectedOptions[0].textContent;
+function lines(){return[["Tipo de cita",S.tipo+(S.extra?" → "+S.extra:"")],["Lugar",S.donde],["Fecha",fmtDate()],["Hora de recogida",hLabel()]]}
+function summary(){$("#sum").innerHTML="<b>Saldría contigo: Sí ♡</b><br>"+lines().map(l=>`<b>${l[0]}:</b> ${l[1]}`).join("<br>")}
+$("#back").onclick=()=>go(1);
+
+$("#send").onclick=async()=>{
+ const btn=$("#send");btn.disabled=true;$("#smsg").textContent="Enviando...";
+ const body={_subject:"💌 Isela respondió: ¡Sí a la cita!",_captcha:"false",_template:"table",Saldrias_conmigo:"Sí ♡"};
+ lines().forEach(l=>body[l[0]]=l[1]);
+ let ok=false;
+ try{const r=await fetch("https://formsubmit.co/ajax/"+EMAIL,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(body)});ok=r.ok}catch(e){}
+ if(!ok){ // fallback: opens her email app with the message ready
+  location.href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Isela respondió: ¡Sí a la cita!")+"&body="+encodeURIComponent("Saldría contigo: Sí ♡\n"+lines().map(l=>l[0]+": "+l[1]).join("\n"));
+ }
+ gcal();go(5);
+};
+
+function gcal(){
+ const[y,m,d]=S.fecha.split("-").map(Number),[hh,mm]=S.hora.split(":").map(Number);
+ const s=new Date(y,m-1,d,hh,mm),e=new Date(s.getTime()+3*3600e3);
+ const f=t=>`${t.getFullYear()}${pad(t.getMonth()+1)}${pad(t.getDate())}T${pad(t.getHours())}${pad(t.getMinutes())}00`;
+ $("#gcal").href="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Nuestra cita ♡ "+S.tipo)+"&dates="+f(s)+"/"+f(e)+"&details="+encodeURIComponent(lines().map(l=>l[0]+": "+l[1]).join("\n"))+"&location="+encodeURIComponent(S.donde);
+}
+</script>
+</body>
+</html>
